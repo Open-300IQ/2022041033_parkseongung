@@ -1,0 +1,61 @@
+package com.example.demo;
+
+// import java.time.LocalDateTime; -- save data -> database
+// import java.util.list; -- check data <- database (findAll)
+// import java.util.Optional; -- check data <- database (findbyId)
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SbbApplicationTests {
+	@Autowired
+	private QuestionRepository questionRepository;
+	
+	@Test
+	void testJpa() {
+		
+		/* save data -> database */
+//		Question q1 = new Question();
+//		q1.setSubject("what is sbb?");
+//		q1.setContent("I want to know about sbb.");
+//		q1.setCreateDate(LocalDateTime.now());
+//		this.questionRepository.save(q1);
+//		
+//		Question q2 = new Question();
+//		q2.setSubject("question about spring boot model");
+//		q2.setContent("is id created automatically?");
+//		q2.setCreateDate(LocalDateTime.now());
+//		this.questionRepository.save(q2);
+		
+		
+		/* check data <- database (findAll) */
+//		List<Optional> all = this.questionRepository.findAll();
+//		assertEquals(2, all.size());
+//		
+//		Question q = all.get(0);
+//		assertEquals("what is sbb?", q.getSubject());
+		
+		
+		/* check data <- database (findById) */
+//		Optional<Question> oq = this.questionRepository.findById(1);
+//		if(oq.isPresent()) {
+//			Question q = oq.get();
+//			assertEquals("what is sbb?", q.getSubject());
+//		}
+		
+		/* check data <- database (findBySubject) */
+//		Question q = this.questionRepository.findBySubject("what is sbb?");
+//		assertEquals(1, q.getId());
+		
+		
+		/* check data <- database (findBySubjectAndContent )*/
+		Question q = this.questionRepository.findBySubjectAndContent("what is sbb?", "I want to know about sbb.");
+		assertEquals(1, q.getId());
+		
+	}
+}
