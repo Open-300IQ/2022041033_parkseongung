@@ -4,34 +4,36 @@ package com.example.demo;
 // import java.util.list; -- check data <- database (findAll)
 // import java.util.Optional; -- check data <- database (findById)
 
-import static org.junit.jupiter.api.Assertions.assertEquals; // only using modify data 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.example.demo.question.QuestionService;
+
+//import static org.junit.jupiter.api.Assertions.assertEquals; // only using modify data 
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+//import java.util.List;
+//import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-
-import com.example.demo.answer.Answer;
-import com.example.demo.question.Question;
-import com.example.demo.question.QuestionRepository;
+//import org.springframework.transaction.annotation.Transactional;
+//
+//
+//import com.example.demo.answer.Answer;
+//import com.example.demo.question.Question;
+//import com.example.demo.question.QuestionRepository;
 
 
 @SpringBootTest
 class SbbApplicationTests {
 	@Autowired
-	private QuestionRepository questionRepository;
+	private QuestionService questionService;
 	
 //	@Autowired
 //	private AnswerRepository answerRepository;
 	
-	@Transactional
+//	@Transactional
 	@Test
 	void testJpa() {
 		
@@ -118,14 +120,19 @@ class SbbApplicationTests {
 		
 		
 		/* check data from question <- database */
-		Optional<Question> oq = this.questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question q = oq.get();
-		
-		List<Answer> answerList = q.getAnswerList();
-		
-		assertEquals(1, answerList.size());
-		assertEquals("yes, it will be created automatically", answerList.get(0).getContent());
+//		Optional<Question> oq = this.questionRepository.findById(2);
+//		assertTrue(oq.isPresent());
+//		Question q = oq.get();
+//		
+//		List<Answer> answerList = q.getAnswerList();
+//		
+//		assertEquals(1, answerList.size());
+//		assertEquals("yes, it will be created automatically", answerList.get(0).getContent());
+		for (int i = 1; i <= 300; i++) {
+			String subject = String.format("테스트 데이터입니다 : [%03d]", i);
+			String content = "내용 없음 ";
+			this.questionService.create(subject, content);
+		}
 		
 	}
 }
