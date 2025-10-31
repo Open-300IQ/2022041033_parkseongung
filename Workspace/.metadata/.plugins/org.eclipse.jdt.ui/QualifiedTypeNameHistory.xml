@@ -9,4 +9,5 @@
     <fullyQualifiedTypeName name="lombok.RequiredArgsConstructor"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Sort.Order"/>
     <fullyQualifiedTypeName name="jakarta.persistence.GenerationType"/>
+    <fullyQualifiedTypeName name="com.example.demo.DataNotFoundException"/>
 </qualifiedTypeNameHistroy>
