@@ -1,0 +1,28 @@
+package Lecture4;
+
+public class Book {
+	String title;
+	String author;
+	void show() { System.out.println(title + " " + author); }
+	
+	public Book() {
+		this("", "");
+		System.out.println("생성자 호출됨");
+	}
+	
+	public Book(String title) {
+		this(title, "작자미상");
+	}
+	
+	public Book(String title, String author) {
+		this.title = title;
+		this.author = author;
+	}
+	
+	public static void main(String[] args) {
+		Book littlePrince = new Book("어린왕자", "생택쥐페리");
+		Book loveStory = new Book("춘향전"); // 춘향전만 저 클래스의 인자 형태와 똑같기에 이거만 호출되고 나머지는 warning이 뜸
+		Book emptyBook = new Book();
+		loveStory.show();
+	}
+}
