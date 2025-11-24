@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Gemini Chatbot</title>
+	<style>
+		body {font-family: sans-serif; margin: 40px; background: #f8f9fa;}
+		#chatBox {border: 1px solid #ccc; background: #fff; padding: 10px; height: 400px; overflow-y: auto; border-radius: 10px;}
+		.user {color: #007bff; margin: 5px 0;}
+		.model {color: #28a745; margin: 5px 0;}
+		textarea {width: 100%; height: 70px; margin-top: 10px}
+		button {margin-top: 5px; padding: 8px 16px;}
+	</style>
+</head>
+<body>
+	<h2>Gemini Chatbot</h2>
+	<div id="chatBox">
+		<div th:each="msg : ${chatHistory}">
+			<p th:text="${msg.role + ': ' + msg.text}" th:class="${msg.role}"></p>
+		</div>
+	</div>
+	
+	<textarea id="message" placeholder="메시지를 입력하세요..."></textarea>
+	<button onclick="sendMessage()">전송</button>
+	
+	<script>
+		const messageInput = document.getElementById("message");
+		const chatBox = document.getElementById("chatBox");
+		const sendBtn = document.getElementById("sendBtn");
+		
+		messageInput.addEventListener("keydown", function(e) {
+			if (e.key === "Enter" && !e.shiftKey) {
+				e.preventDefault();
+				sendMessage();
+			}
+		});
+		
+		sendBtn.addEventListener("click", sendMessage);
+		
+		async function sendMessage() {
+			const msg = document.getElementById("message").value;
+			if (!msg.trim()) return;
+			
+			appendMessage("user", msg);
+			messageInput.value = "";
+			
+			const loadingEl = appendMessage("loading", "답변 생성 중...");
+			
+			try {
+				const res = await fetch("/chat", {
+					method: "POST",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({ message:msg })
+				});
+				
+				const text = await res.text();
+				
+				loadingEl.remove();
+				appendMessage("model", text);
+				
+			} catch (error) {
+				loadingEl.textContent = "서버 에러 발생 : " + error.message;
+				loadingEl.classList.remove("loading");
+				loadingEl.classList.add("model");
+			}
+		}
+		
+		function appendMessage(role, text) {
+			const p = document.createElement("p");
+			p.className = role;
+			p.textContent = `${role}: ${text}`;
+			chatBox.appendChild(p);
+			chatBox.scrollTop = chatBox.scrollHeight;
+			return p;
+		}
+	</script>
+</body>
+</html>
